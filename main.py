@@ -7,8 +7,10 @@ from selenium.webdriver.common.by import By
 import os
 import sys
 import pathlib
+import wmi
 
 script_path = pathlib.Path(__file__).parent.absolute()
+
 
 def resource_path(relative_path):
     try:
@@ -136,6 +138,11 @@ while True:
         press('w')
         keyUp('ctrl')
         sleep(2)
+        f = wmi.WMI()
+        name = 'chromedriver.exe'
+        for process in f.Win32_Process():
+            if process.name == name:
+                process.Terminate()
         alert(text='Security Hardening Settings Applied', title='Done', button='OK')
 
     if prompt == str(2):
@@ -363,6 +370,11 @@ while True:
         press('w')
         keyUp('ctrl')
         sleep(2)
+        f = wmi.WMI()
+        name = 'chromedriver.exe'
+        for process in f.Win32_Process():
+            if process.name == name:
+                process.Terminate()
         alert(text='Privacy Hardening Settings Applied', title='Done', button='OK')
 
     if prompt == str(3):
@@ -443,15 +455,6 @@ while True:
         driver.find_element(By.CSS_SELECTOR, '[class="clear-search"]').click()  # clearbtn
         sleep(1)
         driver.find_element(By.CSS_SELECTOR, '[aria-label="Search flags"]') \
-            .send_keys("#enable-vulkan")  # searchwindow
-        sleep(1.5)
-        driver.find_element(By.CSS_SELECTOR,
-                            '[aria-labelledby="enable-vulkan_name"]') \
-            .send_keys('en')
-        sleep(1)
-        driver.find_element(By.CSS_SELECTOR, '[class="clear-search"]').click()  # clearbtn
-        sleep(1)
-        driver.find_element(By.CSS_SELECTOR, '[aria-label="Search flags"]') \
             .send_keys("#restrict-websockets-pool")  # searchwindow
         sleep(1.5)
         driver.find_element(By.CSS_SELECTOR,
@@ -471,20 +474,21 @@ while True:
         press('w')
         keyUp('ctrl')
         sleep(2)
+        f = wmi.WMI()
+        name = 'chromedriver.exe'
+        for process in f.Win32_Process():
+            if process.name == name:
+                process.Terminate()
         alert(text='Performance Settings Applied', title='Done', button='OK')
 
 
     if prompt == str(0):
         try:
+            f = wmi.WMI()
+            name = 'chromedriver.exe'
+            for process in f.Win32_Process():
+                if process.name == name:
+                    process.Terminate()
             exit(0)
         except:
             break
-
-
-
-
-
-
-
-
-
