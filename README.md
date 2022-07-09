@@ -8,3 +8,4 @@ Applies the settings automatically instead of copy pasting settings one by one.
 You can choose from 3 options Security,Privacy and Performance. 
 
 Make sure all tabs are closed and brave.exe is not running before running the script.
+![brave](https://user-images.githubusercontent.com/16824301/178093926-65c2b7d7-676e-4d2f-b8a2-2f45546cf2b4.gif)
