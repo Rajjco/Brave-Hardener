@@ -1,26 +1,34 @@
 import tkinter.messagebox
+import os
+import sys
+import pathlib
+import wmi
+import psutil
+from os import system
 from pyautogui import press, alert, keyDown, keyUp
 from time import sleep
 from selenium import webdriver
 from selenium.webdriver.chrome.service import Service
 from selenium.webdriver.common.by import By
-import os
-import sys
-import pathlib
-import wmi
 from webdrivermanager import ChromeDriverManager
-import psutil
+from toascii import ConverterOptions, Image, gradients, ColorConverter
 
-# print('''
-#    ___                                           _                              _   _
-#   / __\_ __ __ ___   _____    /\  /\__ _ _ __ __| | ___ _ __   ___ _ __  __   _/ | / |
-#  /__\// '__/ _` \ \ / / _ \  / /_/ / _` | '__/ _` |/ _ \ '_ \ / _ \ '__| \ \ / / | | |
-# / \/  \ | | (_| |\ V /  __/ / __  / (_| | | | (_| |  __/ | | |  __/ |     \ V /| |_| |
-# \_____/_|  \__,_| \_/ \___| \/ /_/ \__,_|_|  \__,_|\___|_| |_|\___|_|      \_/ |_(_)_|
-#
-# ''')
+logo_path = 'Resources\\brave.png'
+options = ConverterOptions(gradient=gradients.BLOCK, width=50, y_stretch=0.45, saturation=0.50)
+converter = ColorConverter(options)
+image = Image(logo_path, converter)
 
-print('Download Latest Chrome Webdriver....')
+print(image.to_ascii())
+print('''  ____                        _    _               _                             __  __  __ 
+ |  _ \                      | |  | |             | |                           /_ |/_ |/_ |
+ | |_) |_ __ __ ___   _____  | |__| | __ _ _ __ __| | ___ _ __   ___ _ __  __   _| | | | | |
+ |  _ <| '__/ _` \ \ / / _ \ |  __  |/ _` | '__/ _` |/ _ \ '_ \ / _ \ '__| \ \ / / | | | | |
+ | |_) | | | (_| |\ V /  __/ | |  | | (_| | | | (_| |  __/ | | |  __/ |     \ V /| |_| |_| |
+ |____/|_|  \__,_| \_/ \___| |_|  |_|\__,_|_|  \__,_|\___|_| |_|\___|_|      \_/ |_(_)_(_)_|
+                                                                                            
+                                                                                            ''')
+print('Downloading Latest Chrome Webdriver....')
+print('------------------------------------')
 
 webdriver_installer = ChromeDriverManager()
 path, path2 = webdriver_installer.download_and_install()
@@ -48,8 +56,10 @@ while True:
     if brave_running == True:
         print("Closing Brave Browser...")
         os.system("TASKKILL /F /IM brave.exe")
-    else:
-        pass
+
+    print("Clearing Previous Output")
+    sleep(3)
+    system('cls')
 
     print("------------------------------------\nApply Brave Hardening Settings\nEnter 1 for Security\n"
           "Enter 2 for Privacy\nEnter 3 for Performance\nEnter 0 to exit\n"
@@ -64,8 +74,7 @@ while True:
         option.add_argument(fr'--user-data-dir={z}\Local\BraveSoftware\Brave-Browser\User Data')
         option.binary_location = 'C:\\Program Files\\BraveSoftware\\Brave-Browser\\Application\\brave.exe'
         option.add_experimental_option("useAutomationExtension", False)
-        option.add_experimental_option("excludeSwitches", ["enable-automation"])
-        option.add_experimental_option("excludeSwitches", ["enable-automation"])
+        option.add_experimental_option("excludeSwitches", ["enable-automation","enable-logging"])
         s = Service(chromedriver)
 
         driver = webdriver.Chrome(service=s, options=option)
@@ -190,7 +199,7 @@ while True:
         option.add_argument(fr'--user-data-dir={z}\Local\BraveSoftware\Brave-Browser\User Data')
         option.binary_location = 'C:\\Program Files\\BraveSoftware\\Brave-Browser\\Application\\brave.exe'
         option.add_experimental_option("useAutomationExtension", False)
-        option.add_experimental_option("excludeSwitches", ["enable-automation"])
+        option.add_experimental_option("excludeSwitches", ["enable-automation","enable-logging"])
         s = Service(chromedriver)
 
         driver = webdriver.Chrome(service=s, options=option)
@@ -419,7 +428,7 @@ while True:
         option.add_argument(fr'--user-data-dir={z}\Local\BraveSoftware\Brave-Browser\User Data')
         option.binary_location = 'C:\\Program Files\\BraveSoftware\\Brave-Browser\\Application\\brave.exe'
         option.add_experimental_option("useAutomationExtension", False)
-        option.add_experimental_option("excludeSwitches", ["enable-automation"])
+        option.add_experimental_option("excludeSwitches", ["enable-automation","enable-logging"])
         s = Service(chromedriver)
 
         driver = webdriver.Chrome(service=s, options=option)
