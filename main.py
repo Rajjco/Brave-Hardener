@@ -4,6 +4,7 @@ import sys
 import pathlib
 import wmi
 import psutil
+import time
 from os import system
 from pyautogui import press, alert, keyDown, keyUp
 from time import sleep
@@ -11,27 +12,30 @@ from selenium import webdriver
 from selenium.webdriver.chrome.service import Service
 from selenium.webdriver.common.by import By
 from webdrivermanager import ChromeDriverManager
-from toascii import ConverterOptions, Image, gradients, ColorConverter
 
-logo_path = 'Resources\\brave.png'
-options = ConverterOptions(gradient=gradients.BLOCK, width=50, y_stretch=0.45, saturation=0.50)
-converter = ColorConverter(options)
-image = Image(logo_path, converter)
 
-print(image.to_ascii())
-print('''  ____                        _    _               _                             __  __  __ 
- |  _ \                      | |  | |             | |                           /_ |/_ |/_ |
- | |_) |_ __ __ ___   _____  | |__| | __ _ _ __ __| | ___ _ __   ___ _ __  __   _| | | | | |
- |  _ <| '__/ _` \ \ / / _ \ |  __  |/ _` | '__/ _` |/ _ \ '_ \ / _ \ '__| \ \ / / | | | | |
- | |_) | | | (_| |\ V /  __/ | |  | | (_| | | | (_| |  __/ | | |  __/ |     \ V /| |_| |_| |
- |____/|_|  \__,_| \_/ \___| |_|  |_|\__,_|_|  \__,_|\___|_| |_|\___|_|      \_/ |_(_)_(_)_|
-                                                                                            
-                                                                                            ''')
+
+user = os.getlogin()
+
+print('''
+  ____                        _    _               _                             __  __   ___  
+ |  _ \                      | |  | |             | |                           /_ |/_ | |__ \ 
+ | |_) |_ __ __ ___   _____  | |__| | __ _ _ __ __| | ___ _ __   ___ _ __  __   _| | | |    ) |
+ |  _ <| '__/ _` \ \ / / _ \ |  __  |/ _` | '__/ _` |/ _ \ '_ \ / _ \ '__| \ \ / / | | |   / / 
+ | |_) | | | (_| |\ V /  __/ | |  | | (_| | | | (_| |  __/ | | |  __/ |     \ V /| |_| |_ / /_ 
+ |____/|_|  \__,_| \_/ \___| |_|  |_|\__,_|_|  \__,_|\___|_| |_|\___|_|      \_/ |_(_)_(_)____|
+                                                                                               ''')
 print('Downloading Latest Chrome Webdriver....')
 print('------------------------------------')
 
-webdriver_installer = ChromeDriverManager()
-path, path2 = webdriver_installer.download_and_install()
+try:
+    webdriver_installer = ChromeDriverManager()
+    path, path2 = webdriver_installer.download_and_install()
+except:
+    print("No Internet Connection...Can't Download ChromeDriver")
+    print("Exiting....")
+    time.sleep(3)
+    exit(0)
 
 script_path = pathlib.Path(__file__).parent.absolute()
 
@@ -57,7 +61,7 @@ while True:
         print("Closing Brave Browser...")
         os.system("TASKKILL /F /IM brave.exe")
 
-    print("Clearing Previous Output")
+    print("Clearing Previous Output.....")
     sleep(3)
     system('cls')
 
@@ -69,15 +73,22 @@ while True:
 
     if prompt == str(1):
         chromedriver = f"{path2}"
-
-        option = webdriver.ChromeOptions()
-        option.add_argument(fr'--user-data-dir={z}\Local\BraveSoftware\Brave-Browser\User Data')
-        option.binary_location = 'C:\\Program Files\\BraveSoftware\\Brave-Browser\\Application\\brave.exe'
-        option.add_experimental_option("useAutomationExtension", False)
-        option.add_experimental_option("excludeSwitches", ["enable-automation","enable-logging"])
-        s = Service(chromedriver)
-
-        driver = webdriver.Chrome(service=s, options=option)
+        try:
+            option = webdriver.ChromeOptions()
+            option.add_argument(fr'--user-data-dir={z}\Local\BraveSoftware\Brave-Browser\User Data')
+            option.binary_location = 'C:\\Program Files\\BraveSoftware\\Brave-Browser\\Application\\brave.exe'
+            option.add_experimental_option("useAutomationExtension", False)
+            option.add_experimental_option("excludeSwitches", ["enable-automation", "enable-logging"])
+            s = Service(chromedriver)
+            driver = webdriver.Chrome(service=s, options=option)
+        except:
+            option = webdriver.ChromeOptions()
+            option.add_argument(fr'--user-data-dir={z}\Local\BraveSoftware\Brave-Browser\User Data')
+            option.binary_location = f'C:\\Users\{user}\\AppData\Local\\BraveSoftware\\Brave-Browser\\Application\\brave.exe'
+            option.add_experimental_option("useAutomationExtension", False)
+            option.add_experimental_option("excludeSwitches", ["enable-automation", "enable-logging"])
+            s = Service(chromedriver)
+            driver = webdriver.Chrome(service=s, options=option)
 
         driver.get("brave://flags/")
         try:
@@ -195,14 +206,22 @@ while True:
     if prompt == str(2):
         chromedriver = f"{path2}"
 
-        option = webdriver.ChromeOptions()
-        option.add_argument(fr'--user-data-dir={z}\Local\BraveSoftware\Brave-Browser\User Data')
-        option.binary_location = 'C:\\Program Files\\BraveSoftware\\Brave-Browser\\Application\\brave.exe'
-        option.add_experimental_option("useAutomationExtension", False)
-        option.add_experimental_option("excludeSwitches", ["enable-automation","enable-logging"])
-        s = Service(chromedriver)
-
-        driver = webdriver.Chrome(service=s, options=option)
+        try:
+            option = webdriver.ChromeOptions()
+            option.add_argument(fr'--user-data-dir={z}\Local\BraveSoftware\Brave-Browser\User Data')
+            option.binary_location = 'C:\\Program Files\\BraveSoftware\\Brave-Browser\\Application\\brave.exe'
+            option.add_experimental_option("useAutomationExtension", False)
+            option.add_experimental_option("excludeSwitches", ["enable-automation", "enable-logging"])
+            s = Service(chromedriver)
+            driver = webdriver.Chrome(service=s, options=option)
+        except:
+            option = webdriver.ChromeOptions()
+            option.add_argument(fr'--user-data-dir={z}\Local\BraveSoftware\Brave-Browser\User Data')
+            option.binary_location = f'C:\\Users\{user}\\AppData\Local\\BraveSoftware\\Brave-Browser\\Application\\brave.exe'
+            option.add_experimental_option("useAutomationExtension", False)
+            option.add_experimental_option("excludeSwitches", ["enable-automation", "enable-logging"])
+            s = Service(chromedriver)
+            driver = webdriver.Chrome(service=s, options=option)
 
         driver.get("brave://flags/")
 
@@ -424,14 +443,22 @@ while True:
     if prompt == str(3):
         chromedriver = f"{path2}"
 
-        option = webdriver.ChromeOptions()
-        option.add_argument(fr'--user-data-dir={z}\Local\BraveSoftware\Brave-Browser\User Data')
-        option.binary_location = 'C:\\Program Files\\BraveSoftware\\Brave-Browser\\Application\\brave.exe'
-        option.add_experimental_option("useAutomationExtension", False)
-        option.add_experimental_option("excludeSwitches", ["enable-automation","enable-logging"])
-        s = Service(chromedriver)
-
-        driver = webdriver.Chrome(service=s, options=option)
+        try:
+            option = webdriver.ChromeOptions()
+            option.add_argument(fr'--user-data-dir={z}\Local\BraveSoftware\Brave-Browser\User Data')
+            option.binary_location = 'C:\\Program Files\\BraveSoftware\\Brave-Browser\\Application\\brave.exe'
+            option.add_experimental_option("useAutomationExtension", False)
+            option.add_experimental_option("excludeSwitches", ["enable-automation", "enable-logging"])
+            s = Service(chromedriver)
+            driver = webdriver.Chrome(service=s, options=option)
+        except:
+            option = webdriver.ChromeOptions()
+            option.add_argument(fr'--user-data-dir={z}\Local\BraveSoftware\Brave-Browser\User Data')
+            option.binary_location = f'C:\\Users\{user}\\AppData\Local\\BraveSoftware\\Brave-Browser\\Application\\brave.exe'
+            option.add_experimental_option("useAutomationExtension", False)
+            option.add_experimental_option("excludeSwitches", ["enable-automation", "enable-logging"])
+            s = Service(chromedriver)
+            driver = webdriver.Chrome(service=s, options=option)
 
         driver.get("brave://flags/")
         try:
